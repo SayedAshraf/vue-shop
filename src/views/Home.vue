@@ -1,8 +1,9 @@
 <template>
   <div class="home">
-    <Navbar></Navbar>
-    <hero></hero>
-    <Product></Product>
+    <Navbar />
+    <hero />
+    <Product />
+    <login></login>
   </div>
 </template>
 
@@ -11,12 +12,14 @@
 
 import Hero from "@/components/Hero.vue";
 import Product from "@/sections/Product.vue";
+import Login from "@/components/Login.vue";
 
 export default {
   name: "Home",
   components: {
     Hero,
     Product,
+    Login,
   },
 };
 </script>

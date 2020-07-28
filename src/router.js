@@ -3,9 +3,9 @@ import VueRouter from "vue-router";
 import Home from "./views/Home.vue";
 import About from "./views/About.vue";
 import Admin from "./views/Admin.vue";
-import Overview from "./components/Overview.vue";
-import Orders from "./components/Orders.vue";
-import Products from "./components/Products.vue";
+import Overview from "./views/Overview.vue";
+import Orders from "./views/Orders.vue";
+import Products from "./views/Products.vue";
 
 Vue.use(VueRouter);
 
