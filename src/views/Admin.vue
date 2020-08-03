@@ -92,7 +92,7 @@
               </li> -->
 
               <li>
-                <a href="#">
+                <a href="#" @click="logOut">
                   <i class="fa fa-power-off"></i>
                   <span>Logout</span>
                 </a>
@@ -114,6 +114,7 @@
 <script>
 // @ is an alias to /src
 import $ from "jquery";
+import {fb} from "../firebase.js";
 
 export default {
   name: "admin",
@@ -124,6 +125,15 @@ export default {
     closeMenu() {
       $(".page-wrapper").toggleClass("toggled");
     },
+    logOut(){
+      fb.auth().signOut()
+      .then(()=>{
+        this.$router.replace('/');
+      })
+      .catch(()=>{
+        console.log('err');
+      })
+    }
   },
 };
 </script>
