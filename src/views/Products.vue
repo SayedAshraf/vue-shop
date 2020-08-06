@@ -7,9 +7,7 @@
             <h3>Products Page</h3>
             <p>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-              Obcaecati, tenetur? Laboriosam neque optio saepe natus quaerat,
-              placeat in voluptatum ea iste excepturi nulla fuga sint quisquam
-              iusto error voluptas velit.
+              Obcaecati, tenetur?
             </p>
           </div>
           <div class="col-md-6">
@@ -22,28 +20,90 @@
         </div>
       </div>
     </div>
-    <div class="sec-crud container">
-      <label> Basic CRUD Operations firebase (ADD/SET/GET/DELETE/UPDATE)</label>
-      <input
-        type="text"
-        placeholder="Enter Product name"
-        class="form-control"
-        v-model="product.name"
-      />
-      <input
-        type="text"
-        placeholder="Enter Product Price"
-        class="form-control"
-        v-model="product.price"
-      />
-      <div class="form-group container">
-        <button type="button" class="btn btn-primary" @click="ADD">
-          Submit
-        </button>
+    <!-- Retrive products from firebase -->
+    <h3 class="float-left ">Products List</h3>
+    <button class="btn btn-primary float-right" @click="AddProduct">Add Product</button>
+
+    <!-- Update Model -->
+    <div
+      class="modal fade"
+      id="add"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="addLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog add-model" role="document">
+        <div class="modal-content">
+          <!-- Model Header -->
+          <div class="modal-header">
+            <h5 class="modal-title" id="edit" v-if="model=='newProduct'">Add Product</h5>
+            <h5 class="modal-title" id="edit" v-else-if="model=='editProduct'">Edit Product</h5>
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <!-- Model Body -->
+          <div class="modal-body">
+            <div class="row">
+              <!-- Main product -->
+              <div class="col-md-8">
+                <div class="form-group">
+                  <input type="text" placeholder="Product Name" v-model="product.name" class="form-control" />
+                </div>
+                <div class="form-group">
+                  <vue-editor v-model="product.description"></vue-editor>
+                </div>
+              </div>
+
+              <!-- Product Sidebar -->
+              <div class="col-md-4">
+                <h4 class="display-6">Product Details</h4>
+                <hr />
+
+                <div class="form-group">
+                  <input
+                    type="text" placeholder="Product price" v-model="product.price" class="form-control"/>
+                </div>
+
+                <div class="form-group">
+                  <input type="text" @keyup.188="addTag" placeholder="Product tags" v-model="tag" class="form-control"/>
+                  <div class="tag-content">
+                    <div v-for="Tag in product.tags" :key="Tag.index">
+                    <span>{{Tag}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="product_image">Product Images</label>
+                  <input type="file" @change="uploadImage($event)" class="form-control" />
+                </div>
+
+                <!-- Dispaying Product Images -->
+                <div class="form-group d-flex" >
+                  <div v-for="(image,index) in product.images" :key="index">
+                    <div class="row">
+                      <div class="img-section col">
+                      <img :src="image" alt="productimage">
+                      <span @click="DeleteImage(image , index)" > X </span>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Model Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" @click="addData" v-if="model=='newProduct'"> Save changes </button>
+            <button type="button" class="btn btn-primary" @click="UpdateProduct(product)" v-else-if="model=='editProduct'"> Apply changes </button>
+          </div>
+        </div>
       </div>
     </div>
-    <!-- Retrive products from firebase -->
-    <h3>Products List</h3>
     <!-- Bootstrap Table -->
     <table class="table">
       <thead class="table-dark">
@@ -62,120 +122,148 @@
           class="item"
         >
           <td>{{ index + 1 }}</td>
-          <td>{{ product.data().name }}</td>
-          <td>{{ product.data().price }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.price }}</td>
           <td>
-            <button @click="EditProduct(product.id)" class="btn btn-primary">
-              Edit
-            </button>
-            <button @click="DeleteProduct(product.id)" class="btn btn-danger">
-              Delete
-            </button>
+            <button @click="EditProduct(product)" class="btn btn-primary">Edit</button>
+            <button @click="DeleteProduct(product)" class="btn btn-danger">Delete</button>
           </td>
         </tr>
       </tbody>
     </table>
-
-    <!-- Update Model -->
-    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="editLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="edit">Update Product</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <label>Product Name</label>
-            <input type="text" class="form-control" v-model="product.name" />
-            <label>Product Price</label>
-            <input type="text" class="form-control" v-model="product.price" />
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
 import { fb, db } from "../firebase";
-import $ from "jquery";
 export default {
   name: "Products",
+  components:{
+    VueEditor,
+  },
   data() {
     return {
       products: [],
       product: {
         name: null,
         price: null,
+        description: null,
+        images: [],
+        tags: [],
       },
-      curentItemID: null,
+      AcriveProductID: null,
+      model: null,
+      tag: null,
+    };
+  },
+  // Realtime Database power of vue-firestore
+  firestore() {
+    return {
+      // Collection
+      products: db.collection("products"),
     };
   },
   methods: {
-    //Get Data from firebase
-    GetData() {
-      db.collection("products")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            this.products.push(doc);
-          });
-        });
-    },
-    //Add Function that add in firebase
-    ADD() {
-      db.collection("products")
-        .add(this.product)
-        .then((docRef) => {
-          console.log("Document written with ID: ", docRef.id);
-          this.GetData();
-          //this.clear();
-        })
-        .catch(function(error) {
-          console.error("Error adding document: ", error);
-        });
-    },
-    //reset component data after i submit
-    clear() {
-      Object.assign(this.$data, this.$options.data.apply(this));
-    },
-    //Delete an collection from firebase by collection ID 
+    //Delete an collection from firebase by collection ID
     DeleteProduct(doc) {
-      if (confirm("Are you sure u want to delete it!")) {
-        db.collection("products")
-          .doc(doc)
-          .delete()
-          .then(function() {
-            console.log("Document successfully deleted!");
-          })
-          .catch(function(error) {
-            console.error("Error removing document: ", error);
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.value) {
+          this.$firestore.products.doc(doc.id).delete();
+          //sweet toast
+          Toast.fire({
+            icon: "success",
+            title: "Product Deleted Successfully",
           });
-      } else {
-        console.log("3al2");
-      }
+        }
+      });
     },
     //funcion open update modal and call update function
-    EditProduct(doc) {
-      $("#edit").modal("show");
-      this.curentItemID = doc.id;
-      this.UpdateProduct();
+    AddProduct(product) {
+      $("#add").modal("show");
+      this.model = 'newProduct';
+    },
+    addData() {
+      this.addTag();
+      this.$firestore.products.add(this.product);
+      $("#add").modal("hide");
+      Toast.fire({
+        icon: "success",
+        title: "Product Added Successfully",
+      });
     },
     //Update function that update collection in firebase
-    UpdateProduct() {
-      console.log("sayed");
+    EditProduct(product) {
+      $("#add").modal("show");
+      this.model = 'editProduct';
+      this.AcriveProductID = product.id;
+      this.product = product;
+    },
+    //Update Product Function
+    UpdateProduct(product){
+    this.$firestore.products.doc(this.AcriveProductID).update(this.product);
+      $("#add").modal("hide");
+      this.product = null;
+      Toast.fire({
+        icon: "success",
+        title: "Product Updated Successfully",
+      });
+    },
+    //Add Tag Function
+    addTag(){
+      this.product.tags.push(this.tag);
+      this.tag='';
+    },
+    //UploadImage
+    uploadImage(e) {
+      if(e.target.files[0]){ 
+        //get the file
+        let file = e.target.files[0];
+
+        // Create a root reference
+        var storageRef = fb.storage().ref('products/' + file.name);
+
+        //upload to firestore storage
+        let uploadTask = storageRef.put(file);
+
+        uploadTask.on('state_changed', (snapshot) =>{
+          }, (error) => {
+            // Handle unsuccessful uploads
+          }, () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              this.product.images.push(downloadURL);
+              console.log('File available at', downloadURL);
+            });
+          });
+      }
+    },
+    DeleteImage(img , index){
+      // Create a reference to the file to delete
+      let image = fb.storage().refFromURL(img);
+      this.product.images.splice(index , 1);
+
+        // Delete the Image
+        image.delete().then(function() {
+          console.log("Image delteted Sucessufuly");
+        }).catch(function(error) {
+          // Uh-oh, an error occurred!
+          console.log("an Error occuored");
+      });
+
     },
   },
   created() {
-    this.GetData();
+
   },
 };
 </script>
@@ -208,6 +296,31 @@ tr {
   td {
     button {
       margin: 0 5px;
+    }
+  }
+}
+.add-model {
+  max-width: 1000px;
+}
+.form-description {
+  height: 190px;
+}.tag-content{
+  display: flex;
+  overflow: auto;
+  padding: 1px;
+}
+.img-section { 
+ position:relative;
+ padding: 1px 2px;
+ img{
+   width: 80px;
+ }
+  span{
+    position: absolute;
+    top: -10px;
+    right: 0px;
+    &:hover{
+      cursor: pointer;
     }
   }
 }

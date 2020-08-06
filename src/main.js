@@ -3,11 +3,19 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import { fb } from "./firebase.js";
+import vuefirestore from "vue-firestore";
+Vue.use(vuefirestore, {
+  key: "id", // the name of the property. Default is '.key'.
+  enumerable: true, //  whether it is enumerable or not. Default is true.
+});
 
 import "./assets/app.scss";
-import "jquery";
+import jQuery from "jquery";
 import "popper.js";
 import "bootstrap";
+window.$ = window.jQuery = jQuery;
+
+import "./assets/SweetAlert";
 
 
 //Reqistring Navbar as a global componenet
