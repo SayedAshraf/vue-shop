@@ -186,19 +186,34 @@ export default {
         }
       });
     },
+    //reset product when add a new
+    reset(){
+      this.product={
+        name: null,
+        price: null,
+        description: null,
+        images: [],
+        tags: [],
+      }
+    },
     //funcion open update modal and call update function
     AddProduct(product) {
+      this.reset();
       $("#add").modal("show");
       this.model = 'newProduct';
     },
     addData() {
-      this.addTag();
-      this.$firestore.products.add(this.product);
-      $("#add").modal("hide");
-      Toast.fire({
-        icon: "success",
-        title: "Product Added Successfully",
-      });
+      if(this.product.name != null && this.product.price != null) {
+        this.addTag();
+        this.$firestore.products.add(this.product);
+        $("#add").modal("hide");
+          Toast.fire({
+            icon: "success",
+            title: "Product Added Successfully",
+          });
+      }else{
+        alert("Name and Price of Product");
+      }
     },
     //Update function that update collection in firebase
     EditProduct(product) {
@@ -209,9 +224,8 @@ export default {
     },
     //Update Product Function
     UpdateProduct(product){
-    this.$firestore.products.doc(this.AcriveProductID).update(this.product);
+      this.$firestore.products.doc(this.AcriveProductID).update(this.product);
       $("#add").modal("hide");
-      this.product = null;
       Toast.fire({
         icon: "success",
         title: "Product Updated Successfully",
@@ -247,6 +261,7 @@ export default {
           });
       }
     },
+    //Function Delete image
     DeleteImage(img , index){
       // Create a reference to the file to delete
       let image = fb.storage().refFromURL(img);

@@ -3,6 +3,8 @@
     <div class="container">
       <h1 class="text-center p-5">Our Products</h1>
       <div class="row">
+        
+        <!-- items -->
         <div class="col-md-4">
           <div class="card product-item">
             <img
@@ -64,6 +66,10 @@
 <script>
 export default {
   name: "Products",
+  data(){
+    return {
+    }
+  },
   props: {
     msg: String,
   },

@@ -1,12 +1,7 @@
 <template>
   <div class="admin">
     <div class="page-wrapper default-theme sidebar-bg bg1 toggled">
-      <a
-        id="show-sidebar"
-        @click="closeMenu"
-        class="btn btn-sm btn-dark"
-        href="#"
-      >
+      <a id="show-sidebar" @click="closeMenu" class="btn btn-sm btn-dark" href="#">
         <i class="fas fa-bars"></i>
       </a>
       <nav id="sidebar" class="sidebar-wrapper">
@@ -19,24 +14,25 @@
             </div>
           </div>
           <!-- sidebar-header  -->
-          <div class="sidebar-item sidebar-header">
-            <div class="user-pic">
-              <img
-                class="img-responsive img-rounded"
-                src="../assets/img/user.png"
-                alt="User picture"
-              />
-            </div>
-            <div class="user-info">
-              <span class="user-name"
-                >Store
-                <strong>Admin</strong>
-              </span>
-              <span class="user-role"></span>
-              <span class="user-status">
-                <i class="fa fa-circle"></i>
-                <span>Online</span>
-              </span>
+          <div class="sidebar-all">
+            <div class="sidebar-item sidebar-header">
+              <div class="user-pic">
+                <img
+                  class="img-responsive img-rounded"
+                  src="../assets/img/user.png"
+                  alt="User picture"
+                />
+              </div>
+              <div class="user-info">
+                <span class="user-name" v-if="name">{{name}}</span>
+                <span class="user-name" v-else>Admin Store</span>
+                <span>{{email}}</span>
+                <span class="user-role"></span>
+                <span class="user-status">
+                  <i class="fa fa-circle"></i>
+                  <span>Online</span>
+                </span>
+              </div>
             </div>
           </div>
           <!-- sidebar-search  -->
@@ -57,12 +53,11 @@
             </div>
           </div>
           <!-- sidebar-menu  -->
-          <div class="container sidebar-item sidebar-menu">
+          <div class="container sidebar-item sidebar-menu admin-menu">
             <ul class="row">
-              <li class="header-menu">
+              <li class="header-menu col-md-12 text-left">
                 <span>Menu</span>
               </li>
-              ,<br />
               <li>
                 <router-link to="/admin/overview">
                   <i class="fa fa-chart-line"></i>
@@ -84,12 +79,12 @@
                 </router-link>
               </li>
 
-              <!-- <li>
+              <li>
                 <router-link to="/admin/profile">
                   <i class="fa fa-user"></i>
                   <span>Profile</span>
                 </router-link>
-              </li> -->
+              </li>
 
               <li>
                 <a href="#" @click="logOut">
@@ -114,12 +109,16 @@
 <script>
 // @ is an alias to /src
 import $ from "jquery";
-import {fb} from "../firebase.js";
+import {fb ,db} from "../firebase.js";
 
 export default {
   name: "admin",
   data() {
-    return {};
+    return {
+      name:null,
+      email:null,
+      uid:null,
+    };
   },
   methods: {
     closeMenu() {
@@ -129,13 +128,37 @@ export default {
       fb.auth().signOut()
       .then(()=>{
         this.$router.replace('/');
+        Toast.fire({
+          icon: "success",
+          title: "LogOut Successfully",
+        });
       })
       .catch(()=>{
         console.log('err');
       })
     }
   },
+  created(){
+    const user = fb.auth().currentUser;
+    this.email = user.email;
+    //Get the name of User
+    db.collection("profiles").doc(user.uid).get().then((doc)=> {
+        if (doc.exists){
+          this.name = doc.data().name;
+        } else {
+          console.log("No such document!")
+        }}).catch(function(error) {
+          console.log("Error getting document:", error)
+    });
+  }
 };
 </script>
 
-<style></style>
+<style>
+  .admin-menu{
+    padding: 5px 5px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+</style>

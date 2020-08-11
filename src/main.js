@@ -21,6 +21,10 @@ import "./assets/SweetAlert";
 //Reqistring Navbar as a global componenet
 Vue.component("Navbar", require("./components/Navbar.vue").default);
 
+//adding vue carousal 
+import VueCarousel from 'vue-carousel';
+Vue.use(VueCarousel);
+
 Vue.config.productionTip = false;
 
 //Get the currently signed-in user
