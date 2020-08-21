@@ -1,132 +1,70 @@
 <template>
   <div class="login">
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="login"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="loginTitle"
-      aria-hidden="true"
-    >
+    <!-- Model For Sign in and Sign up -->
+    <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="loginTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <ul
-              class="nav nav-fill nav-pills mb-3"
-              id="pills-tab"
-              role="tablist"
-            >
+             <!-- list Have two buttons SignIn and Sign Up -->
+            <ul class="nav nav-fill nav-pills mb-3" id="pills-tab" role="tablist">
               <li class="nav-item">
-                <a
-                  class="nav-link active"
-                  id="pills-home-tab"
-                  data-toggle="pill"
-                  href="#pills-login"
-                  role="tab"
-                  aria-controls="pills-login"
-                  aria-selected="true"
-                >
-                  Login</a
-                >
+                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-login" role="tab" aria-controls="pills-login" aria-selected="true">
+                  Login</a>
               </li>
-              <li class="nav-item">
-                <a
-                  class="nav-link"
-                  id="pills-register-tab"
-                  data-toggle="pill"
-                  href="#pills-register"
-                  role="tab"
-                  aria-controls="pills-register"
-                  aria-selected="false"
-                  >Signup</a
-                >
-              </li>
-            </ul>
 
+              <li class="nav-item">
+                <a class="nav-link" id="pills-register-tab" data-toggle="pill" href="#pills-register" role="tab" aria-controls="pills-register" aria-selected="false"
+                  >Signup</a>
+              </li>
+
+            </ul>
             <div class="tab-content" id="pills-tabContent">
-              <div
-                class="tab-pane fade show active"
-                id="pills-login"
-                role="tabpanel"
-                aria-labelledby="pills-login-tab"
-              >
+
+                <!-- Sign in Section  -->
+              <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="pills-login-tab">
                 <!-- Email Input -->
                 <div class="form-group">
                   <label for="exampleInputEmail1">Email address</label>
-                  <input
-                    type="email"
-                    v-model="email"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    placeholder="Write your Email"
-                  />
+                  <input type="email" v-model="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Write your Email" />
                 </div>
                 <!-- Password Input -->
                 <div class="form-group">
                   <label for="exampleInputPassword1">Password</label>
-                  <input
-                    type="password"
-                    @keyup.enter="login"
-                    v-model="password"
-                    class="form-control"
-                    id="exampleInputPassword1"
-                    placeholder="Password"
-                  />
+                  <input type="password" @keyup.enter="login" v-model="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
                 </div>
                 <!-- LogIn Button -->
                 <div class="form-group">
                   <button class="btn btn-primary" @click="login">Login</button>
                 </div>
               </div>
-              <div
-                class="tab-pane fade"
-                id="pills-register"
-                role="tabpanel"
-                aria-labelledby="pills-register-tab"
-              >
+
+              <!-- Sign Up Section / Add New Account -->
+              <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="pills-register-tab">
                 <h5 class="text-center">Create New Account</h5>
+
                 <!-- Sign Up Name -->
                 <div class="form-group">
                   <label for="name">Your name</label>
-                  <input
-                    type="text"
-                    v-model="name"
-                    class="form-control"
-                    id="name"
-                    placeholder="Your Name"
-                  />
+                  <input type="text" v-model="name" class="form-control" id="name" placeholder="Your Name" />
                 </div>
+
                 <!-- Sign Up Email -->
                 <div class="form-group">
                   <label for="email">Email address</label>
-                  <input
-                    type="email"
-                    v-model="email"
-                    class="form-control"
-                    id="email"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter email"
-                  />
+                  <input type="email" v-model="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" />
                 </div>
+
                 <!-- Sign Up Password -->
                 <div class="form-group">
                   <label for="password">Password</label>
-                  <input
-                    type="password"
-                    v-model="password"
-                    class="form-control"
-                    id="password"
-                    placeholder="Password"
-                  />
+                  <input type="password" v-model="password" class="form-control" id="password" placeholder="Password" />
                 </div>
+
                 <!-- Sign Up Button -->
                 <div class="form-group">
-                  <button class="btn btn-primary" @click="register">
-                    Signup
-                  </button>
+                  <button class="btn btn-primary" @click="register"> Signup </button>
                 </div>
+
               </div>
             </div>
           </div>
@@ -141,8 +79,8 @@ import { fb,db } from "../firebase.js";
 export default {
   name: "Login",
   props: {
-
   },
+  
   data() {
     return {
       name: null,
@@ -152,6 +90,7 @@ export default {
   },
 
   methods: {
+    //Firebase Login Function by Sign in with Email and Password
     login() {
       fb.auth()
         .signInWithEmailAndPassword(this.email, this.password)
@@ -171,6 +110,7 @@ export default {
           console.log(error);
         });
     },
+    //Firebase SignUp Function that Create User With Email And Password
     register() {
       fb.auth().createUserWithEmailAndPassword(this.email, this.password)
         .then((user) => {
@@ -207,4 +147,6 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+
+</style>

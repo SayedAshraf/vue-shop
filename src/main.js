@@ -17,13 +17,17 @@ window.$ = window.jQuery = jQuery;
 
 import "./assets/SweetAlert";
 
-
 //Reqistring Navbar as a global componenet
 Vue.component("Navbar", require("./components/Navbar.vue").default);
+Vue.component("add-to-cart", require("./components/AddToCart.vue").default);
 
-//adding vue carousal 
-import VueCarousel from 'vue-carousel';
+//adding vue carousal
+import VueCarousel from "vue-carousel";
 Vue.use(VueCarousel);
+
+//vue fillter
+import Vue2Filters from "vue2-filters";
+Vue.use(Vue2Filters);
 
 Vue.config.productionTip = false;
 

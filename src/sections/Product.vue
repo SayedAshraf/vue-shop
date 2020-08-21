@@ -1,4 +1,5 @@
 <template>
+  <!-- Component That i make for static products ,  before do Product List and get Products from database -->
   <div class="products" id="products">
     <div class="container">
       <h1 class="text-center p-5">Our Products</h1>
@@ -15,8 +16,7 @@
             <div class="card-body">
               <h5 class="card-title">Shoes Nike</h5>
               <p class="card-text">
-                Description Description Description Description Description
-                Description Description Description
+                Description
               </p>
               <a href="#" class="btn btn-primary">Add to Cart</a>
             </div>
@@ -33,8 +33,7 @@
             <div class="card-body">
               <h5 class="card-title">Shoes Adidas</h5>
               <p class="card-text">
-                Description Description Description Description Description
-                Description Description Description
+                Description
               </p>
               <a href="#" class="btn btn-primary">Add to Cart</a>
             </div>
@@ -51,13 +50,13 @@
             <div class="card-body">
               <h5 class="card-title">Shoes Adidas</h5>
               <p class="card-text">
-                Description Description Description Description Description
-                Description Description Description
+                Description
               </p>
               <a href="#" class="btn btn-primary">Add to Cart</a>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   </div>

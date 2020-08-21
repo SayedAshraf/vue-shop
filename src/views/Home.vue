@@ -4,6 +4,7 @@
     <hero />
     <ProdctList />
     <login></login>
+    <mini-cart />
   </div>
 </template>
 
@@ -13,6 +14,7 @@
 import Hero from "@/components/Hero.vue";
 import Product from "@/sections/Product.vue";
 import Login from "@/components/Login.vue";
+import MiniCart from "@/components/MiniCart.vue";
 import ProdctList from "@/sections/ProdctList.vue";
 
 export default {
@@ -22,6 +24,7 @@ export default {
     Product,
     Login,
     ProdctList,
+    MiniCart,
   },
 };
 </script>

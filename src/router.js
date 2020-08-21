@@ -7,6 +7,8 @@ import Overview from "./views/Overview.vue";
 import Orders from "./views/Orders.vue";
 import Profile from "./views/Profile.vue";
 import Products from "./views/Products.vue";
+import Checkout from "./views/Checkout.vue";
+import ProdctList from "./sections/ProdctList.vue";
 import { fb } from "./firebase.js";
 
 Vue.use(VueRouter);
@@ -24,6 +26,16 @@ const router = new VueRouter({
       path: "/about",
       name: "About",
       component: About,
+    },
+    {
+      path: "/productlist",
+      name: "ProductList",
+      component: ProdctList,
+    },
+    {
+      path: "/checkout",
+      name: "Checkout",
+      component: Checkout,
     },
     {
       path: "/admin",

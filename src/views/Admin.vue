@@ -15,15 +15,11 @@
           </div>
           <!-- sidebar-header  -->
           <div class="sidebar-all">
-            <div class="sidebar-item sidebar-header">
-              <div class="user-pic">
-                <img
-                  class="img-responsive img-rounded"
-                  src="../assets/img/user.png"
-                  alt="User picture"
-                />
+            <div class="sidebar-item sidebar-header row">
+              <div class="user-pic col-md-12" >
+                <img class="adminImg img-responsive img-rounded col-md-6" :src="photoUrl" alt="User picture"/>
               </div>
-              <div class="user-info">
+              <div class="user-info col-md-12">
                 <span class="user-name" v-if="name">{{name}}</span>
                 <span class="user-name" v-else>Admin Store</span>
                 <span>{{email}}</span>
@@ -118,6 +114,7 @@ export default {
       name:null,
       email:null,
       uid:null,
+      photoUrl: null,
     };
   },
   methods: {
@@ -136,7 +133,7 @@ export default {
       .catch(()=>{
         console.log('err');
       })
-    }
+    },
   },
   created(){
     const user = fb.auth().currentUser;
@@ -145,6 +142,7 @@ export default {
     db.collection("profiles").doc(user.uid).get().then((doc)=> {
         if (doc.exists){
           this.name = doc.data().name;
+          this.photoUrl = doc.data().photoUrl;
         } else {
           console.log("No such document!")
         }}).catch(function(error) {
@@ -160,5 +158,7 @@ export default {
     display: flex;
     justify-content: center;
     align-content: center;
+  }.adminImg{
+    border-radius: 50%;
   }
 </style>

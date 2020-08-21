@@ -1,25 +1,23 @@
 <template>
   <div class="hero">
-    <div class="container h-100">
-      <div class="row h-100 justify-content-center align-items-center">
-        <div class="col-md-5">
-          <div class="hero-content">
-            <h1 class="hero-title">
-              Vue Shop For Developers
-            </h1>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
-              numquam tempora, iure delectus totam minus quam aperiam ratione
-              dolores magni voluptates ut necessitatibus odio ipsum fuga,
-              voluptas ab praesentium nihil?
+    <div class="container">
+      <div class="row justify-content-center align-items-center">
+        <div class="hero-body col-md-5 col-sm-12">
+          <div class="hero-content mt-6">
+            <h1 class="hero-title">OnlineShop</h1>
+            <!-- Decription in Hero page  -->
+            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+              numquam tempora, iure delectus totam minus quam aperiam ratione dolores magni.
             </p>
-            <div class="hero-btn mt-5">
-              <button class="btn custom-btn btn-info mr-4">Explore</button>
-              <button class="btn custom-btn btn-outline-secondary">Products</button>
+            <!-- The Explore and Prodcts Buttons -->
+            <div class="hero-btn row">
+              <button class="btn btn-info col-md-5 col-sm-5 col-xs-5 mr-2 ml-2 mt-2 mb-2">Explore</button>
+              <button class="btn btn-outline-secondary col-md-5 col-xs-5 mr-2 ml-2 mt-2 mb-2">Products</button>
             </div>
           </div>
         </div>
-        <div class="col-md-7">
+        <!-- Image Section in Hero Page -->
+        <div class="col-md-7 col-sm-12">
           <div class="graphic">
             <img src="../assets/img/svg/graphic.svg" alt="grapic image" />
           </div>
@@ -41,9 +39,19 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 .hero {
-  padding-top: 7rem;
   width: 100%;
-  height: 500px;
   text-align: left;
+  .hero-title{
+    padding-top: 100px;
+    padding-bottom: 50px;
+  }
+  .graphic{
+    padding-top: 100px;
+    padding-bottom: 50px;
+  }
+  .hero-body{
+    text-align: center;
+    padding: 30px;
+  }
 }
 </style>

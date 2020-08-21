@@ -106,80 +106,6 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <input
-                      type="submit"
-                      @click="updateProfile"
-                      value="Save Changes"
-                      class="btn btn-primary w-100"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Account Form -->
-          <div
-            class="tab-pane fade pt-3"
-            id="account"
-            role="tabpanel"
-            aria-labelledby="account-tab"
-          >
-            <div class="container">
-              <div class="row">
-                <div class="col-md-">
-                  <div class="alert alert-info">
-                    Please use the Reset password email button for reseting the
-                    password. The form doens't work currently
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      v-model="account.name"
-                      placeholder="User name"
-                      class="form-control"
-                    />
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      v-model="account.email"
-                      placeholder="Email address"
-                      class="form-control"
-                    />
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      v-model="account.password"
-                      placeholder="New password"
-                      class="form-control"
-                    />
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <input
-                      type="text"
-                      v-model="account.confirmPassword"
-                      placeholder="Confirm password"
-                      class="form-control"
-                    />
-                  </div>
-                </div>
-
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <input
                       type="file"
                       @change="uploadImage"
                       class="form-control"
@@ -192,21 +118,62 @@
                   <div class="form-group">
                     <input
                       type="submit"
+                      @click="updateProfile"
                       value="Save Changes"
                       class="btn btn-primary w-100"
                     />
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Account Form -->
+          <div class="tab-pane fade pt-3" id="account" role="tabpanel" aria-labelledby="account-tab">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-">
+                  <div class="alert alert-info">
+                    Please use the Reset password email button for reseting the password. The form doens't work currently
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input type="text" v-model="account.name" placeholder="User name" class="form-control" />
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input type="text" v-model="account.email" placeholder="Email address" class="form-control" />
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input
+                      type="text" v-model="account.password" placeholder="New password" class="form-control" />
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input type="text" v-model="account.confirmPassword" placeholder="Confirm password" class="form-control"/>
+                  </div>
+                </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input
-                      type="button"
-                      @click="resetPassword"
-                      value="Reset password by email"
-                      class="btn btn-success w-100"
-                    />
+                    <input type="submit" value="Save Changes" class="btn btn-primary w-100"/>
                   </div>
+                </div>
+
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <input type="button" @click="resetPassword" value="Reset password by email" class="btn btn-success w-100" />
+                </div>
+                
                 </div>
               </div>
             </div>
@@ -222,7 +189,11 @@ import { fb, db } from "../firebase";
 
 export default {
   name: "profile",
-  components: {
+  firestore() {
+    const user = fb.auth().currentUser;
+    return {
+      profile: db.collection("profiles").doc(user.uid),
+    };
   },
   data() {
     return {
@@ -231,6 +202,7 @@ export default {
         phone: null,
         address: null,
         postcode: null,
+        photoUrl: null,
       },
       account: {
         name: null,
@@ -243,19 +215,13 @@ export default {
       },
     };
   },
-
-  firestore() {
-    const user = fb.auth().currentUser;
-    return {
-      profile: db.collection("profiles").doc(user.uid),
-    };
-  },
-
   methods: {
+    //Reset password by Email
     resetPassword() {
       const auth = fb.auth();
 
-      auth.sendPasswordResetEmail(auth.currentUser.email)
+      auth
+        .sendPasswordResetEmail(auth.currentUser.email)
         .then(() => {
           Toast.fire({
             icon: "success",
@@ -266,22 +232,46 @@ export default {
           console.log(error);
         });
     },
-
+    //Update profile
     updateProfile() {
-      this.$firestore.profile.update(this.profile)        
-        .then(() => {
-          Toast.fire({
-            icon: "success",
-            title: "Product Added Successfully",
-          });
-        })
+      this.$firestore.profile.update(this.profile).then(() => {
+        Toast.fire({
+          icon: "success",
+          title: "Profile Updated Successfully",
+        });
+      });
     },
-    uploadImage() {
+    //upload image
+    uploadImage(e) {
+      if (e.target.files[0]) {
+        //get the file
+        let file = e.target.files[0];
 
+        // Create a root reference
+        var storageRef = fb.storage().ref("profiles/" + file.name);
+
+        //upload to firestore storage
+        let uploadTask = storageRef.put(file);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {},
+          (error) => {
+            // Handle unsuccessful uploads
+          },
+          () => {
+            // Handle successful uploads on complete
+            uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+              this.profile.photoUrl = downloadURL;
+              console.log("File available at", downloadURL);
+            });
+          }
+        );
+      }
     },
   },
   created() {
-    
+
   },
 };
 </script>

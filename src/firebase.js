@@ -1,18 +1,17 @@
 import firebase from "firebase";
-
 require("firebase/firestore");
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
-  apiKey: "AIzaSyDRRhmHdKttWN--vhGfpChtKG7QpDh2_ug",
-  authDomain: "vue-shop-5544b.firebaseapp.com",
-  databaseURL: "https://vue-shop-5544b.firebaseio.com",
-  projectId: "vue-shop-5544b",
-  storageBucket: "vue-shop-5544b.appspot.com",
-  messagingSenderId: "738505397934",
-  appId: "1:738505397934:web:266ee62ca7152b8f773f3f",
-  measurementId: "G-T0ZYM74R3Z",
-};
+    apiKey: "AIzaSyCOovktwXhefqkWhvPjlv2aUKgijGRsFW8",
+    authDomain: "onlinesh0p.firebaseapp.com",
+    databaseURL: "https://onlinesh0p.firebaseio.com",
+    projectId: "onlinesh0p",
+    storageBucket: "onlinesh0p.appspot.com",
+    messagingSenderId: "800773710659",
+    appId: "1:800773710659:web:1a177f379c024961b2c5f6",
+    measurementId: "G-E6EBTFMNNL"
+  };
 
 
 //Initialize db refrence to database and fb refrence to Firebase

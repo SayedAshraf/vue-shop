@@ -1,6 +1,7 @@
 <template>
   <div class="overview">
-    <div class="container">
+    <Navbar />
+    <div class="container header">
       <div class="intro">
         <div class="row justify-content-center align-items-center">
           <div class="col-md-6">
@@ -29,4 +30,8 @@ export default {
   name: "about",
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.header {
+  padding-top: 50px;
+}
+</style>
