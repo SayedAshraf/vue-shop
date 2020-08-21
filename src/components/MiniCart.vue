@@ -21,7 +21,7 @@
                       </div>
 
                       <div class="col-xs-6 col-sm-6" >
-                        <h4>{{ item.ProductName | capitalized }}</h4>
+                        <h4>{{ item.ProductName | capitalize }}</h4>
                         <h6>{{ item.ProductPrice*item.productQuantity | currency}}</h6>
                         <h6>Quantity {{ item.productQuantity }}</h6>
                       </div>

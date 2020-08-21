@@ -50,78 +50,42 @@
 
         <div class="tab-content" id="myTabContent">
           <!-- Profile Form -->
-          <div
-            class="tab-pane fade show active pt-3"
-            id="profile"
-            role="tabpanel"
-            aria-labelledby="profile-tab"
-          >
+          <div class="tab-pane fade show active pt-3" id="profile" role="tabpanel" aria-labelledby="profile-tab" >
             <div class="container">
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      name=""
-                      v-model="profile.name"
-                      placeholder="Full name"
-                      class="form-control"
-                    />
+                    <input type="text" name="" v-model="profile.name" placeholder="Full name" class="form-control" />
                   </div>
                 </div>
 
                 <div class="col-md-6">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      v-model="profile.phone"
-                      placeholder="Phone"
-                      class="form-control"
-                    />
+                    <input type="text" v-model="profile.phone" placeholder="Phone" class="form-control"/>
                   </div>
                 </div>
 
                 <div class="col-md-12">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      v-model="profile.address"
-                      placeholder="Address"
-                      class="form-control"
-                    />
+                    <input type="text" v-model="profile.address" placeholder="Address" class="form-control" />
                   </div>
                 </div>
 
                 <div class="col-md-8">
                   <div class="form-group">
-                    <input
-                      type="text"
-                      v-model="profile.postCode"
-                      placeholder="Postcode"
-                      class="form-control"
-                    />
+                    <input type="text" v-model="profile.postCode" placeholder="Postcode" class="form-control" />
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input
-                      type="file"
-                      @change="uploadImage"
-                      class="form-control"
-                      title=" "
-                    />
+                    <input type="file" @change="uploadImage" class="form-control" title=" "/>
                   </div>
                 </div>
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <input
-                      type="submit"
-                      @click="updateProfile"
-                      value="Save Changes"
-                      class="btn btn-primary w-100"
-                    />
+                    <input type="submit" @click="updateProfile" value="Save Changes" class="btn btn-primary w-100" />
                   </div>
                 </div>
               </div>
@@ -137,38 +101,38 @@
                     Please use the Reset password email button for reseting the password. The form doens't work currently
                   </div>
                 </div>
-
+                <!-- Account Username -->
                 <div class="col-md-6">
                   <div class="form-group">
                     <input type="text" v-model="account.name" placeholder="User name" class="form-control" />
                   </div>
                 </div>
-
+                <!-- Account Email Adress -->
                 <div class="col-md-6">
                   <div class="form-group">
                     <input type="text" v-model="account.email" placeholder="Email address" class="form-control" />
                   </div>
                 </div>
-
+                <!-- Account NewPassword -->
                 <div class="col-md-6">
                   <div class="form-group">
                     <input
                       type="text" v-model="account.password" placeholder="New password" class="form-control" />
                   </div>
                 </div>
-
+                <!-- Account ConfiremPassword -->
                 <div class="col-md-6">
                   <div class="form-group">
                     <input type="text" v-model="account.confirmPassword" placeholder="Confirm password" class="form-control"/>
                   </div>
                 </div>
-
+                <!-- Button to submit Data -->
                 <div class="col-md-4">
                   <div class="form-group">
                     <input type="submit" value="Save Changes" class="btn btn-primary w-100"/>
                   </div>
                 </div>
-
+                <!-- Account Reset Password -->
                 <div class="col-md-4">
                   <div class="form-group">
                     <input type="button" @click="resetPassword" value="Reset password by email" class="btn btn-success w-100" />

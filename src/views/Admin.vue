@@ -118,9 +118,11 @@ export default {
     };
   },
   methods: {
+    //Function that toggle the menu bar
     closeMenu() {
       $(".page-wrapper").toggleClass("toggled");
     },
+    //log out function 
     logOut(){
       fb.auth().signOut()
       .then(()=>{
@@ -135,6 +137,7 @@ export default {
       })
     },
   },
+  //when website created it get user informations
   created(){
     const user = fb.auth().currentUser;
     this.email = user.email;

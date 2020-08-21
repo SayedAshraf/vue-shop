@@ -1,4 +1,5 @@
 <template>
+  <!-- Home Component That included NavBar and Plroductlist Login and MiniCart Model -->
   <div class="home">
     <Navbar />
     <hero />
@@ -9,8 +10,7 @@
 </template>
 
 <script>
-// @ is an alias to /src
-
+// @ is an alias to /src in my project
 import Hero from "@/components/Hero.vue";
 import Product from "@/sections/Product.vue";
 import Login from "@/components/Login.vue";

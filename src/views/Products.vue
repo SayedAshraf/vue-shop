@@ -1,4 +1,5 @@
 <template>
+  <!-- Admin Product Vuew -->
   <div class="products">
     <div class="container h-100">
       <div class="intro h-100">
@@ -26,13 +27,7 @@
 
     <!-- Update Model -->
     <div
-      class="modal fade"
-      id="add"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="addLabel"
-      aria-hidden="true"
-    >
+      class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="addLabel" aria-hidden="true">
       <div class="modal-dialog add-model" role="document">
         <div class="modal-content">
           <!-- Model Header -->
@@ -142,6 +137,7 @@ export default {
   components:{
     VueEditor,
   },
+  //Component Data
   data() {
     return {
       products: [],
@@ -202,6 +198,7 @@ export default {
       $("#add").modal("show");
       this.model = 'newProduct';
     },
+    //Add Products Function
     addData() {
       if(this.product.name != null && this.product.price != null) {
         this.addTag();
@@ -236,7 +233,7 @@ export default {
       this.product.tags.push(this.tag);
       this.tag='';
     },
-    //UploadImage
+    //UploadImage Function
     uploadImage(e) {
       if(e.target.files[0]){ 
         //get the file
