@@ -1,3 +1,11 @@
+## Project live
+https://onlinesh0p.web.app/
+
+Admin Dashbord -> GetStart -> 
+Login -> 
+Email: admin@admin.com
+password: 123456
+
 # vue-shop
 
 ## Project setup
@@ -14,11 +22,3 @@ npm run serve
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
